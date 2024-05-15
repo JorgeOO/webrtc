@@ -1,4 +1,1 @@
-av                                                                
-cv2                                                               
-numpy                                                   
-streamlit
+av
