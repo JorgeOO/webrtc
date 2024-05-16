@@ -21,4 +21,4 @@ st.title("WebRTC with Streamlit - Grayscale Filter")
 RTC_CONFIGURATION = RTCConfiguration({"iceServers": [{"urls": ["stun:stun1.l.google.com:19302"]}]})
 
 # Initialize the webrtc streamer
-webrtc_streamer(key="example", video_processor_factory=VideoTransformer, rtc_configuration=RTC_CONFIGURATION)
+webrtc_streamer(key="example", video_processor_factory=VideoTransformer, )#rtc_configuration=RTC_CONFIGURATION)
