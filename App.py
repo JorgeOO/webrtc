@@ -18,7 +18,7 @@ class VideoTransformer(VideoProcessorBase):
 st.title("WebRTC with Streamlit - Grayscale Filter")
 
 # Define the RTC configuration with STUN server
-RTC_CONFIGURATION = RTCConfiguration({"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]})
+RTC_CONFIGURATION = RTCConfiguration({"iceServers": [{"urls": ["stun:stun1.l.google.com:19302"]}]})
 
 # Initialize the webrtc streamer
 webrtc_streamer(key="example", video_processor_factory=VideoTransformer, rtc_configuration=RTC_CONFIGURATION)
