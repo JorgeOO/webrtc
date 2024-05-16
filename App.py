@@ -1,3 +1,4 @@
+import asyncio
 import av
 import cv2
 import numpy as np
@@ -22,6 +23,9 @@ class VideoTransformer(VideoTransformerBase):
 def main():
     st.title("WebRTC Video Streaming Example")
     st.write("This is a simple example of WebRTC video streaming with Streamlit and face detection using OpenCV.")
+
+    # Configurar el bucle de eventos
+    asyncio.set_event_loop(asyncio.new_event_loop())
 
     webrtc_ctx = webrtc_streamer(
         key="example",
