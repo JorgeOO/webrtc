@@ -2,23 +2,32 @@ import av
 import cv2
 import numpy as np
 import streamlit as st
-from streamlit_webrtc import webrtc_streamer, VideoProcessorBase, RTCConfiguration
+from streamlit_webrtc import VideoTransformerBase, webrtc_streamer
 
-# Define the video transformer class
-class VideoTransformer(VideoProcessorBase):
-    def recv(self, frame):
+class VideoTransformer(VideoTransformerBase):
+    def __init__(self):
+        self.model = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
+
+    def transform(self, frame):
         img = frame.to_ndarray(format="bgr24")
+
         # Convert image to grayscale
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        # Convert back to 3-channel image
-        gray_3_channel = cv2.cvtColor(gray, cv2.COLOR_GRAY2BGR)
-        return av.VideoFrame.from_ndarray(gray_3_channel, format="bgr24")
 
-# Set up the Streamlit app
-st.title("WebRTC with Streamlit - Grayscale Filter")
+        # Detect faces
+        faces = self.model.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
 
-# Define the RTC configuration with STUN server
-RTC_CONFIGURATION = RTCConfiguration({"iceServers": [{"urls": ["stun:stun1.l.google.com:19302"]}]})
+        # Draw rectangle around the faces
+        for (x, y, w, h) in faces:
+            cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 0), 2)
 
-# Initialize the webrtc streamer
-webrtc_streamer(key="example", video_processor_factory=VideoTransformer, RTCConfiguration({"iceServers": [{"urls": ["stun:stun.ekiga.net"]}]})#rtc_configuration=RTC_CONFIGURATION)
+        return img
+
+def main():
+    st.title("WebRTC Video Streaming Example")
+    
+    # Start the video stream
+    webrtc_streamer(key="example", video_transformer_factory=VideoTransformer)
+
+if __name__ == "__main__":
+    main()
