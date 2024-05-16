@@ -1,1 +1,5 @@
 av
+streamlit
+numpy
+os
+opencv-python-headless
