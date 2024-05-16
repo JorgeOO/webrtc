@@ -2,3 +2,4 @@ av
 streamlit
 numpy
 opencv-python-headless
+streamlit-webrtc
