@@ -28,10 +28,7 @@ def main():
     asyncio.set_event_loop(asyncio.new_event_loop())
 
     webrtc_ctx = webrtc_streamer(
-        key="example",
-        video_transformer_factory=VideoTransformer,
-        media_stream_constraints={"video": True, "audio": False},
-        async_transform=True
+        key="example"
     )
 
     if webrtc_ctx.video_transformer:
